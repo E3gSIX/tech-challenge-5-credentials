@@ -1,12 +1,16 @@
 package com.e3gsix.fiap.tech_challenge_5_credentials.service.impl;
 
+import com.e3gsix.fiap.tech_challenge_5_credentials.controller.exception.NotFoundException;
 import com.e3gsix.fiap.tech_challenge_5_credentials.controller.exception.ResourceAlreadyExistException;
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.request.UserCreateRequest;
+import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.response.UserResponse;
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.entity.User;
 import com.e3gsix.fiap.tech_challenge_5_credentials.repository.UserRepository;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,4 +35,11 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(entity);
     }
 
+    @Override
+    public UserResponse findById(UUID id) {
+        User userFound = this.userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Usuário com id '" + id + "' não foi encontrado."));
+
+        return new UserResponse(userFound.getId(), userFound.getUsername(), userFound.getRole());
+    }
 }
