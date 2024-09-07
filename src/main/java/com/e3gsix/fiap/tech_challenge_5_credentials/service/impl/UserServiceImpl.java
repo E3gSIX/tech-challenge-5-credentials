@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public UUID register(UserCreateRequest request) {
         if (this.userRepository.existsByUsername(request.username())) {
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
         User savedUsed = this.userRepository.save(entity);
 
-        return  savedUsed.getId();
+        return savedUsed.getId();
     }
 
     @Override
