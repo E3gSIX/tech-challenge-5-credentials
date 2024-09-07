@@ -1,9 +1,9 @@
 package com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl;
 
 import com.e3gsix.fiap.tech_challenge_5_credentials.controller.AuthenticationController;
-import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.UserCreateRequest;
-import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.UserLoginRequest;
-import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.UserLoginResponse;
+import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.request.UserCreateRequest;
+import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.request.UserLoginRequest;
+import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.response.UserLoginResponse;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.AuthenticationService;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.UserService;
 import org.springframework.http.HttpStatus;
