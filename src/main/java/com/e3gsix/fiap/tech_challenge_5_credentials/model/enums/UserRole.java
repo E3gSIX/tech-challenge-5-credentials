@@ -1,8 +1,8 @@
 package com.e3gsix.fiap.tech_challenge_5_credentials.model.enums;
 
 public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("ADMIN"),
+    USER("USER");
 
     private String role;
 
