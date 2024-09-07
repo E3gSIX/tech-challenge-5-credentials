@@ -7,7 +7,6 @@ import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.response.UserRespo
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.entity.User;
 import com.e3gsix.fiap.tech_challenge_5_credentials.repository.UserRepository;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.UserService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -28,9 +27,7 @@ public class UserServiceImpl implements UserService {
             throw new ResourceAlreadyExistException("Username já está em uso.");
         }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
-
-        User entity = new User(request.username(), encryptedPassword, request.role());
+        User entity = new User(request.username(), request.password(), request.role());
 
         User savedUsed = this.userRepository.save(entity);
 
