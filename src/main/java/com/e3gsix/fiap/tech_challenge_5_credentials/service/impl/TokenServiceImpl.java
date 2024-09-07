@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.entity.User;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.TokenService;
 import org.slf4j.Logger;
@@ -26,17 +27,16 @@ public class TokenServiceImpl implements TokenService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public String validateToken(String token) {
+    public DecodedJWT validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
                     .withIssuer("auth-api")
                     .build()
-                    .verify(token)
-                    .getSubject();
+                    .verify(token);
         } catch (JWTVerificationException e) {
             logger.error(e.getMessage());
-            return "";
+            return null;
         }
     }
 

@@ -25,7 +25,6 @@ import java.util.Objects;
 
 import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.AuthenticationControllerImpl.*;
 import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.UserControllerImpl.URL_USERS;
-import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.UserControllerImpl.URL_USERS_FIND_BY_ID;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -36,7 +35,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final Map<String, HttpMethod> PERMITTED_RESOURCE = Map.of(
             URL_AUTH.concat(URl_AUTH_REGISTER), HttpMethod.POST,
             URL_AUTH.concat(URl_AUTH_LOGIN), HttpMethod.POST,
-            URL_USERS.concat(URL_USERS_FIND_BY_ID), HttpMethod.GET
+            URL_USERS, HttpMethod.GET
     );
 
     public SecurityFilter(TokenService tokenService, UserRepository userRepository) {
@@ -106,11 +105,14 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     private boolean isPermittedEndpoint(String endpoint, String method) {
-        if (!PERMITTED_RESOURCE.keySet().contains(endpoint)) return false;
+        for (String resourceEndpoint : PERMITTED_RESOURCE.keySet()) {
+            if (endpoint.contains(resourceEndpoint)) {
+                HttpMethod resourceMethod = PERMITTED_RESOURCE.get(resourceEndpoint);
+                if (method.equals(resourceMethod.name())) return true;
+            }
+        }
 
-        HttpMethod resourceMethod = PERMITTED_RESOURCE.get(endpoint);
-
-        return resourceMethod.name().equals(method);
+        return false;
     }
 
     private String recoverToken(HttpServletRequest request) {
