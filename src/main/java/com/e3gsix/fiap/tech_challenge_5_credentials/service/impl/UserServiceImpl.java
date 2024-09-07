@@ -3,6 +3,7 @@ package com.e3gsix.fiap.tech_challenge_5_credentials.service.impl;
 import com.e3gsix.fiap.tech_challenge_5_credentials.controller.exception.NotFoundException;
 import com.e3gsix.fiap.tech_challenge_5_credentials.controller.exception.ResourceAlreadyExistException;
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.request.UserCreateRequest;
+import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.request.UserUpdateRequest;
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.response.UserResponse;
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.entity.User;
 import com.e3gsix.fiap.tech_challenge_5_credentials.repository.UserRepository;
@@ -35,9 +36,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse findById(UUID id) {
+        User userFound = getUser(id);
+
+        return toResponse(userFound);
+    }
+
+    @Override
+    public UserResponse update(UUID id, UserUpdateRequest request) {
+        User entity = getUser(id);
+
+        entity.setUsername(request.username());
+        entity.setPassword(request.password());
+        entity.setRole(request.role());
+
+        User updatedUser = this.userRepository.save(entity);
+
+        return toResponse(updatedUser);
+    }
+
+    private User getUser(UUID id) {
         User userFound = this.userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Usuário com id '" + id + "' não foi encontrado."));
+        return userFound;
+    }
 
+    private UserResponse toResponse(User userFound) {
         return new UserResponse(userFound.getId(), userFound.getUsername(), userFound.getRole());
     }
 }
