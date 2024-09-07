@@ -1,5 +1,6 @@
 package com.e3gsix.fiap.tech_challenge_5_credentials.security;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.e3gsix.fiap.tech_challenge_5_credentials.controller.exception.StandardError;
 import com.e3gsix.fiap.tech_challenge_5_credentials.repository.UserRepository;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.TokenService;
@@ -61,8 +62,14 @@ public class SecurityFilter extends OncePerRequestFilter {
             return;
         }
 
-        String username = tokenService.validateToken(token);
-        UserDetails user = userRepository.findByUsername(username);
+        DecodedJWT decodedJWT = tokenService.validateToken(token);
+
+        if (Objects.isNull(decodedJWT)) {
+            unauthorizeResponse(request, response, "Token recebido não é válido.");
+            return;
+        }
+
+        UserDetails user = userRepository.findByUsername(decodedJWT.getSubject());
 
         var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
