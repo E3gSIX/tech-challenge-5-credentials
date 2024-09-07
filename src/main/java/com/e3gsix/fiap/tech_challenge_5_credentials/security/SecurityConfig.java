@@ -1,5 +1,6 @@
 package com.e3gsix.fiap.tech_challenge_5_credentials.security;
 
+import com.e3gsix.fiap.tech_challenge_5_credentials.model.enums.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/users/{id}").hasRole(UserRole.ADMIN.getRole())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

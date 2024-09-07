@@ -1,7 +1,7 @@
 package com.e3gsix.fiap.tech_challenge_5_credentials.service.impl;
 
 import com.e3gsix.fiap.tech_challenge_5_credentials.controller.exception.NotFoundException;
-import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.UserLoginRequest;
+import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.request.UserLoginRequest;
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.entity.User;
 import com.e3gsix.fiap.tech_challenge_5_credentials.repository.UserRepository;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.AuthenticationService;
