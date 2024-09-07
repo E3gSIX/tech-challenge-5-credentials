@@ -3,6 +3,7 @@ package com.e3gsix.fiap.tech_challenge_5_credentials.controller.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -34,7 +35,7 @@ public class AdviceExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    @ExceptionHandler({NotFoundException.class, NoResourceFoundException.class})
+    @ExceptionHandler({NotFoundException.class, NoResourceFoundException.class, UsernameNotFoundException.class})
     public ResponseEntity<StandardError> handleNotFoundException(NotFoundException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
 
