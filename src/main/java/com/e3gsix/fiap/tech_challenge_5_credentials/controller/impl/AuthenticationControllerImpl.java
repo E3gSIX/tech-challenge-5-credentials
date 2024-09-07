@@ -25,8 +25,8 @@ import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.UserC
 public class AuthenticationControllerImpl implements AuthenticationController {
 
     public static final String URL_AUTH = "/auth";
-    public static final String URl_REGISTER = "/register";
-    public static final String URl_LOGIN = "/login";
+    public static final String URl_AUTH_REGISTER = "/register";
+    public static final String URl_AUTH_LOGIN = "/login";
 
     private final UserService userService;
     private final AuthenticationService authenticationService;
@@ -37,7 +37,7 @@ public class AuthenticationControllerImpl implements AuthenticationController {
     }
 
     @Override
-    @PostMapping(URl_REGISTER)
+    @PostMapping(URl_AUTH_REGISTER)
     public ResponseEntity register(
             @RequestBody UserCreateRequest request,
             UriComponentsBuilder uriComponentsBuilder
@@ -52,7 +52,7 @@ public class AuthenticationControllerImpl implements AuthenticationController {
     }
 
     @Override
-    @PostMapping(URl_LOGIN)
+    @PostMapping(URl_AUTH_LOGIN)
     public ResponseEntity login(@RequestBody UserLoginRequest request) {
         String token = this.authenticationService.login(request);
 
