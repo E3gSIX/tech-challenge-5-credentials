@@ -6,14 +6,19 @@ import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.request.UserLoginR
 import com.e3gsix.fiap.tech_challenge_5_credentials.model.dto.response.UserLoginResponse;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.AuthenticationService;
 import com.e3gsix.fiap.tech_challenge_5_credentials.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
+import java.util.UUID;
 
 import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.AuthenticationControllerImpl.URL_AUTH;
+import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.UserControllerImpl.URL_USERS;
+import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.UserControllerImpl.URL_USERS_FIND_BY_ID;
 
 @RestController
 @RequestMapping(URL_AUTH)
@@ -33,10 +38,17 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 
     @Override
     @PostMapping(URl_REGISTER)
-    public ResponseEntity register(@RequestBody UserCreateRequest request) {
-        this.userService.register(request);
+    public ResponseEntity register(
+            @RequestBody UserCreateRequest request,
+            UriComponentsBuilder uriComponentsBuilder
+    ) {
+        UUID registeredId = this.userService.register(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        URI uri = uriComponentsBuilder.path(URL_USERS.concat(URL_USERS_FIND_BY_ID))
+                .buildAndExpand(registeredId)
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
     @Override

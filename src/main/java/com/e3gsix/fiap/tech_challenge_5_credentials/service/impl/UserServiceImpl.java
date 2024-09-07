@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void register(UserCreateRequest request) {
+    public UUID register(UserCreateRequest request) {
         if (this.userRepository.existsByUsername(request.username())) {
             throw new ResourceAlreadyExistException("Username já está em uso.");
         }
@@ -32,7 +32,9 @@ public class UserServiceImpl implements UserService {
 
         User entity = new User(request.username(), encryptedPassword, request.role());
 
-        this.userRepository.save(entity);
+        User savedUsed = this.userRepository.save(entity);
+
+        return  savedUsed.getId();
     }
 
     @Override
