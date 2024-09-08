@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -47,7 +48,7 @@ class AuthenticationControllerImplTest {
         ResponseEntity<?> response = underTest.register(request, uriComponentsBuilder);
 
         //Then
-        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(ResponseEntity.created(URI.create("/users/" + registeredId)).build(), response);
         verify(userService, times(1)).register(any(UserCreateRequest.class));
     }
