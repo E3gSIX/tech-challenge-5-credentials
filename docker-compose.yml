@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    container_name: postgres
+    container_name: postgres-credentials
     image: postgres:13-alpine
     restart: always
     environment:
@@ -15,7 +15,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4:8.5
-    container_name: pgadmin4
+    container_name: pgadmin4-credentials
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@db.com"
