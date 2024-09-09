@@ -46,9 +46,9 @@ class SecurityAuthServiceImplTest {
         when(userRepository.findByUsername(username)).thenThrow(new UsernameNotFoundException("User not found"));
 
         // When
-        UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> {
-            underTest.loadUserByUsername(username);
-        });
+        UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () ->
+            underTest.loadUserByUsername(username)
+        );
 
         // Then
         assertEquals("User not found", exception.getMessage());
