@@ -25,6 +25,7 @@ import java.util.Objects;
 
 import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.AuthenticationControllerImpl.*;
 import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.UserControllerImpl.URL_USERS;
+import static com.e3gsix.fiap.tech_challenge_5_credentials.swagger.SwaggerConfig.*;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -33,6 +34,9 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
 
     private final Map<String, HttpMethod> PERMITTED_RESOURCE = Map.of(
+            URL_SWAGGER, HttpMethod.GET,
+            URL_SWAGGER_DEFAULT, HttpMethod.GET,
+            URL_SWAGGER_API, HttpMethod.GET,
             URL_AUTH.concat(URl_AUTH_REGISTER), HttpMethod.POST,
             URL_AUTH.concat(URl_AUTH_LOGIN), HttpMethod.POST,
             URL_USERS, HttpMethod.GET
