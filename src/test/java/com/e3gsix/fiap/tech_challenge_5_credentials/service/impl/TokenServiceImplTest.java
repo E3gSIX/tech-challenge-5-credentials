@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,7 +22,6 @@ import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,9 +34,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TokenServiceImplTest {
-
-    @Mock
-    private Logger logger;
 
     @InjectMocks
     private TokenServiceImpl underTest;
@@ -81,9 +76,9 @@ class TokenServiceImplTest {
         when(user.getUsername()).thenThrow(new RuntimeException("Erro ao gerar token."));
 
         // When
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            underTest.generateToken(user);
-        });
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                underTest.generateToken(user)
+        );
 
         // Then
         assertEquals("Erro ao gerar token.", exception.getMessage());
