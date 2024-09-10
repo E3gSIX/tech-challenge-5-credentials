@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import static com.e3gsix.fiap.tech_challenge_5_credentials.controller.impl.UserControllerImpl.URL_USERS;
 
-@Controller
+@RestController
 @RequestMapping(URL_USERS)
 public class UserControllerImpl implements UserController {
 
