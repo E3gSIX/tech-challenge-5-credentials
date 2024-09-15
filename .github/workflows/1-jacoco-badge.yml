@@ -3,7 +3,8 @@ name: Generate JaCoCo Badge
 on:
   push:
     branches: [ main, feature/* ]
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
