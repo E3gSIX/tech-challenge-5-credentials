@@ -1,5 +1,7 @@
 # Tech Challenge 5 - Credentials
 
+![Java Code Coverage](.github/badges/jacoco.svg)
+
 Microsserviço dedicado às credenciais, gerenciando usuários e suas sessões. 
 
 ## Swagger
